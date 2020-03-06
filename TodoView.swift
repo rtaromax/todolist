@@ -19,7 +19,7 @@ class todoMain: ObservableObject {
     @Published var detailsShowing: Bool = false
     @Published var detailsTitle: String = ""
     @Published var detailsDueDate: Date = Date()
-    @Published var thingId: String = "examplejw01"
+    @Published var thingId: String = ""
     
     func sort() {
         self.todos.sort(by:{ $0.dueDate.timeIntervalSince1970 < $1.dueDate.timeIntervalSince1970})
