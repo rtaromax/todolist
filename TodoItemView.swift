@@ -26,6 +26,7 @@ class Todo: NSObject, NSCoding, Identifiable {
     var checked: Bool = false
     var i: Int = 0
     var thingId: String = ""
+    var todoId: String = ""
     
     init(title: String, dueDate: Date, i: Int, checked: Bool, thingId: String) {
         self.title = title
@@ -33,6 +34,7 @@ class Todo: NSObject, NSCoding, Identifiable {
         self.i = i
         self.checked = checked
         self.thingId = thingId
+        
     }
 }
 
