@@ -43,7 +43,8 @@ struct TodoListView: View {
         }
             .onAppear {
                 let database = realStorage().setRealm(databaseName: "wanshi")
-                let todoList = Array(database.objects(todoData.self))
+                let predicate = NSPredicate(format: "thingId = %@", String(self.main.thingId))
+                let todoList = Array(database.objects(todoData.self).filter(predicate))
                 if todoList.count > 0 {
                     self.main.todos = todoList.map {
                         todoData2Todo($0)

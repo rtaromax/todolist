@@ -47,14 +47,14 @@ struct TodoDetailsView: View {
                     UIApplication.shared.windows[0].endEditing(true)
                     let database = realStorage().setRealm(databaseName: "wanshi")
                     if editingMode {
-                        let predicate = NSPredicate(format: "i = %@", String(editingIndex))
+                        let predicate = NSPredicate(format: "i = %@ AND thingId = %@", String(editingIndex), String(self.main.thingId))
                         let editingItem = database.objects(todoData.self).filter(predicate)
                         try! database.write {
                             editingItem.setValue(self.main.detailsTitle, forKey: "title")
                             editingItem.setValue(self.main.detailsDueDate, forKey: "dueDate")
                         }
                     } else {
-                        let newTodo = todoData(value: ["title" : self.main.detailsTitle, "dueDate" : self.main.detailsDueDate, "i" : 0])
+                        let newTodo = todoData(value: ["title" : self.main.detailsTitle, "dueDate" : self.main.detailsDueDate, "i" : 0, "thingId": self.main.thingId])
                         try! database.write{
                             database.add(newTodo)
                         }

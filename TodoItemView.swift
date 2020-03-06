@@ -88,6 +88,12 @@ struct TodoItemView: View {
             Button(action:{
                 self.main.todos[self.todoIndex].checked.toggle()
                 self.checked = self.main.todos[self.todoIndex].checked
+                let database = realStorage().setRealm(databaseName: "wanshi")
+                let predicate = NSPredicate(format: "i = %@ AND thingId = %@", String(self.todoIndex), String(self.main.thingId))
+                let checkedItem = database.objects(todoData.self).filter(predicate)
+                try! database.write {
+                    checkedItem.setValue(self.checked, forKey: "checked")
+                }
             }) {
                 HStack{
                     Spacer()
@@ -106,6 +112,7 @@ struct TodoItemView: View {
             }.onAppear {
                 self.checked = self.main.todos[self.todoIndex].checked
             }
+                
         }.background(Color(checked ? "todoItem-bg-checked" : "todoItem-bg"))
             .animation(.spring())
     }
