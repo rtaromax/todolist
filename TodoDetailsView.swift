@@ -54,7 +54,8 @@ struct TodoDetailsView: View {
                             editingItem.setValue(self.main.detailsDueDate, forKey: "dueDate")
                         }
                     } else {
-                        let newTodo = todoData(value: ["title" : self.main.detailsTitle, "dueDate" : self.main.detailsDueDate, "i" : 0])
+                        let thingId = self.main.thingId
+                        let newTodo = todoData(value: ["title" : self.main.detailsTitle, "dueDate" : self.main.detailsDueDate, "i" : 0, "thingId" : thingId])
                         try! database.write{
                             database.add(newTodo)
                         }

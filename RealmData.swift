@@ -12,21 +12,36 @@ import Realm
 
 
 class thingData: Object, Identifiable {
+    @objc dynamic var thingId: String = ""
     @objc dynamic var title: String = ""
     @objc dynamic var subtitle: String = ""
-    @objc dynamic var totalSteps: Int = 0
-    @objc dynamic var checkedSteps: Int = 0
-    @objc dynamic var thingId: String = ""
+    @objc dynamic var category: String = ""
+    @objc dynamic var totalTodos: Int = 0
+    @objc dynamic var checkedTodos: Int = 0
+    @objc dynamic var startDate: Date = Date()
+    @objc dynamic var dueDate: Date = Date()
 //    let todoStep = List<todoData>()
 }
 
 
 class todoData: Object, Identifiable {
     @objc dynamic var thingId: String = ""
+    @objc dynamic var todoId: String = UUID().uuidString
     @objc dynamic var title: String = ""
+    @objc dynamic var subtitle: String = ""
+    @objc dynamic var category: String = ""
+    @objc dynamic var priority: String = ""
+    @objc dynamic var monthDuration: Int = 0
+    @objc dynamic var dayDuration: Int = 0
+    @objc dynamic var hourDuration: Int = 0
+    @objc dynamic var minuteDuration: Int = 0
+    @objc dynamic var startDate: Date = Date()
     @objc dynamic var dueDate: Date = Date()
     @objc dynamic var checked: Bool = false
     @objc dynamic var i: Int = 0
+    @objc dynamic var order: Int = 0
+    @objc dynamic var isRepeat: Bool = false
+    @objc dynamic var alarm: Date = Date()
 }
 
 class realStorage {

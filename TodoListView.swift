@@ -42,8 +42,13 @@ struct TodoListView: View {
             .navigationBarTitle(Text("TO DO LIST").foregroundColor(Color("theme")))
         }
             .onAppear {
+                
+                // read database & filter query
                 let database = realStorage().setRealm(databaseName: "wanshi")
-                let todoList = Array(database.objects(todoData.self))
+                let predicate = NSPredicate(format: "thingId = %@", String(self.main.thingId))
+                let todoList = Array(database.objects(todoData.self).filter(predicate))
+                
+                // load tods and sort
                 if todoList.count > 0 {
                     self.main.todos = todoList.map {
                         todoData2Todo($0)

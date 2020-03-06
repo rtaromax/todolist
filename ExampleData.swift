@@ -17,6 +17,7 @@ var exampleThings: [thingData] = [
 
 var exampletodos: [Todo] = [
     Todo(title: "擦地", dueDate: Date(), i: 0, checked: false, thingId: "examplejw01"),
+    Todo(title: "擦2", dueDate: Date(), i: 0, checked: false, thingId: "examplejw01"),
     Todo(title: "洗锅", dueDate: Date(), i: 1, checked: false, thingId: "examplejw01"),
     Todo(title: "看电视", dueDate: Date(), i: 2, checked: false, thingId: "examplejw01"),
     Todo(title: "做APP", dueDate: Date(), i: 3, checked: false, thingId: "examplexx01"),
