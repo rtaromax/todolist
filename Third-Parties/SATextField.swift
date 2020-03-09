@@ -57,7 +57,7 @@ struct SATextField: UIViewRepresentable {
     
     func updateUIView(_ uiView: WrappableTextField, context: UIViewRepresentableContext<SATextField>) {
         if detailsShouldUpdateTitle {
-            uiView.becomeFirstResponder()
+//            uiView.becomeFirstResponder()
             if editingMode {
                 uiView.text = editingTodo.title
             } else {

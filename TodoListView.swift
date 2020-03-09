@@ -10,56 +10,56 @@ import SwiftUI
 
 
 struct TodoListView: View {
+    
     @ObservedObject var main: todoMain
+    let thing: Thing
+    
     var body: some View {
         NavigationView {
-            ScrollView {
-                ForEach(main.todos) { todo in
-                        VStack {
-                            if todo.i == 0 || formatter.string(from: self.main.todos[todo.i].dueDate) != formatter.string(from: self.main.todos[todo.i - 1].dueDate)
-                            {
-                                HStack {
-                                    Spacer().frame(width: 30)
-                                    Text(date2Word(date: self.main.todos[todo.i].dueDate))
-                                    Spacer()
+            VStack{
+//                Text("XXXXXXXXXXX")
+//                Text("XXXXXXXXXXX")
+//                Text("XXXXXXXXXXX")
+                ScrollView {
+                    ForEach(main.todos) { todo in
+                            VStack {
+                                Spacer().frame(height: 10)
+                                if todo.i == 0 || formatter.string(from: self.main.todos[todo.i].dueDate) != formatter.string(from: self.main.todos[todo.i - 1].dueDate)
+                                {
+                                    HStack {
+                                        Spacer().frame(width: 30)
+                                        Text(date2Word(date: self.main.todos[todo.i].dueDate))
+                                        Spacer()
+                                    }
                                 }
+                                HStack {
+                                    Spacer().frame(width:20)
+                                    TodoItemView(main: self.main, todoIndex: todo.i)
+                                        .cornerRadius(10)
+                                        .clipped()
+                                        .shadow(color: Color("todoItemShadow"), radius: 5)
+                                    Spacer().frame(width: 25)
+                                }
+                                Spacer().frame(height: 15)
                             }
-                            HStack {
-                                Spacer().frame(width:20)
-                                TodoItemView(main: self.main, todoIndex: .constant(todo.i))
-                                    .cornerRadius(10)
-                                    .clipped()
-                                    .shadow(color: Color("todoItemShadow"), radius: 5)
-                                Spacer().frame(width: 25)
-                            }
-                            Spacer().frame(height: 20)
                         }
-                    }
-                
-                Spacer().frame(height: 150)
+                    
+                    Spacer().frame(height: 150)
+                }
+                .edgesIgnoringSafeArea(.bottom)
+                .navigationBarTitle(Text(self.thing.title).foregroundColor(Color("theme")))
             }
-            .edgesIgnoringSafeArea(.bottom)
-            .navigationBarTitle(Text("TO DO LIST").foregroundColor(Color("theme")))
         }
             .onAppear {
                 
                 // read database & filter query
-                let database = realStorage().setRealm(databaseName: "wanshi")
-                let predicate = NSPredicate(format: "thingId = %@", String(self.main.thingId))
-                let todoList = Array(database.objects(todoData.self).filter(predicate))
-
+//                let db = realStorage().setRealm(databaseName: dbName)
+                let todoList = Array(db.objects(Todo.self).filter("thingId = %@", self.thing.thingId))
                 
-                // load tods and sort
-
-                if todoList.count > 0 {
-                    self.main.todos = todoList.map {
-                        todoData2Todo($0)
-                    }
-                    self.main.sort()
-                } else {
-                    self.main.todos = exampletodos.filter{ $0.thingId.contains(self.main.thingId)}
-                    self.main.sort()
-                }
+                // load todos and sort
+                self.main.todos = todoList
+                self.main.dbSort()
+                
             }
         }
     }
@@ -67,6 +67,6 @@ struct TodoListView: View {
 
 struct TodoListView_Previews: PreviewProvider {
     static var previews: some View {
-        TodoListView(main: todoMain())
+        TodoListView(main: todoMain(), thing: Thing())
     }
 }

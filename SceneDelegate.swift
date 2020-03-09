@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Create the SwiftUI view that provides the window contents.
         //let contentView = TodoView(main: todoMain())
-        let contentView = ThingListView()
+        let contentView = ThingListView(things: [Thing()])
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {

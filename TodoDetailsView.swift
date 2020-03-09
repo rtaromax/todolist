@@ -45,27 +45,40 @@ struct TodoDetailsView: View {
                 if !confirmingCancel {
                 Button(action: {
                     UIApplication.shared.windows[0].endEditing(true)
-                    let database = realStorage().setRealm(databaseName: "wanshi")
+                    let db = realStorage().setRealm(databaseName: dbName)
                     if editingMode {
-                        let predicate = NSPredicate(format: "i = %@ AND thingId = %@", String(editingIndex), String(self.main.thingId))
-                        let editingItem = database.objects(todoData.self).filter(predicate)
-                        try! database.write {
-                            editingItem.setValue(self.main.detailsTitle, forKey: "title")
-                            editingItem.setValue(self.main.detailsDueDate, forKey: "dueDate")
+                        let editingItem = db.objects(Todo.self).filter("todoId == %@", self.main.todos[editingIndex].todoId).first ?? Todo()
+                        try! db.write {
+                            editingItem.title = self.main.detailsTitle
+                            editingItem.dueDate = self.main.detailsDueDate
                         }
                     } else {
-                        let newTodo = todoData(value: ["title" : self.main.detailsTitle, "dueDate" : self.main.detailsDueDate, "i" : 0, "thingId": self.main.thingId])
-                        try! database.write{
-                            database.add(newTodo)
+                        let newTodo = Todo()
+                        
+                        newTodo.thingId = self.main.thingId
+                        newTodo.title = self.main.detailsTitle
+                        newTodo.dueDate = self.main.detailsDueDate
+                        
+                        try! db.write{
+                            db.add(newTodo)
                         }
                     }
-                    let todoList = Array(database.objects(todoData.self))
-                    self.main.todos = todoList.map {
-                        todoData2Todo($0)
+                    
+                    let todoList = Array(db.objects(Todo.self))
+                    self.main.todos = todoList
+                    self.main.dbSort()
+                    
+                    // update Thing properties
+                    let editingThing = db.objects(Thing.self).filter("thingId == %@", self.main.thingId).first
+                    let totalTodoCount = self.main.todos.count
+                    try! db.write{
+                        editingThing?.totalTodos = totalTodoCount
                     }
-                    self.main.sort()
+                    
+                    
                     self.confirmingCancel = false
                     self.main.detailsShowing = false
+                    
                 }) {
                     if editingMode{
                         Text("DONE").padding()
@@ -75,6 +88,7 @@ struct TodoDetailsView: View {
                 }.disabled(main.detailsTitle == "")
             }
             }
+            
             SATextField(tag: 0, text: editingTodo.title, placeholder: "ADD TO DO ITEMS", changeHandler: {
                 (newString) in
                 self.main.detailsTitle = newString
@@ -82,8 +96,10 @@ struct TodoDetailsView: View {
             }
             .padding(8)
             .foregroundColor(.white)
+            
             DatePicker(selection: $main.detailsDueDate, displayedComponents: .date, label: {() -> EmptyView in})
             .padding()
+            
             Spacer()
         }
         .padding()
@@ -92,6 +108,7 @@ struct TodoDetailsView: View {
     }
     }
 }
+
 
 struct TodoDetailsView_Previews: PreviewProvider {
     static var previews: some View {

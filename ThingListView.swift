@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ThingListView: View {
     
-    var things : [thingData] = exampleThings
+    @State var things : [Thing]
     
     var body: some View {
         NavigationView {
@@ -19,7 +19,7 @@ struct ThingListView: View {
                         VStack {
                             HStack {
                                 Spacer().frame(width:20)
-                                ThingItemView(main: todoMain(), thingTitle: thing.title, thingId: thing.thingId)
+                                ThingItemView(main: todoMain(), thing: thing)
                                     .cornerRadius(10)
                                     .clipped()
                                     .shadow(color: Color("todoItemShadow"), radius: 5)
@@ -33,13 +33,17 @@ struct ThingListView: View {
             }
             .edgesIgnoringSafeArea(.bottom)
             .navigationBarTitle(Text("Plan").foregroundColor(Color("theme")))
-    }
+        }
+        .onAppear{
+//           let db = realStorage().setRealm(databaseName: dbName)
+            self.things = Array(db.objects(Thing.self))
+        }
     }
 }
 
 struct ThingItemView_Previews: PreviewProvider {
     static var previews: some View {
-        ThingListView()
+        ThingListView(things: [Thing()])
     }
 }
 

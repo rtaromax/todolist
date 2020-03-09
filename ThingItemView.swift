@@ -11,24 +11,27 @@ import SwiftUI
 struct ThingItemView: View {
     @ObservedObject var main: todoMain
     @State var showingDetail = false
-    let thingTitle: String
-    let thingId: String
+    
+    let thing: Thing
     
     var body: some View {
         Button(action: {
             self.showingDetail.toggle()
-            self.main.thingId = self.thingId
-            print(self.thingId)
+            self.main.thingId = self.thing.thingId
         }) {
-            Text(thingTitle)
+            VStack{
+                Text(self.thing.title)
+                Text(String(self.thing.totalTodos))
+            }
+            
         }.sheet(isPresented: $showingDetail) {
-            TodoView(main: self.main)
+            TodoView(main: self.main, thing: self.thing)
         }
     }
 }
 
 struct ThingListView_Previews: PreviewProvider {
     static var previews: some View {
-        ThingItemView(main: todoMain(), thingTitle: "", thingId: "")
+        ThingItemView(main: todoMain(), thing: Thing())
     }
 }
