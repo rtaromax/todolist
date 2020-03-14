@@ -12,9 +12,25 @@ class todoMain: ObservableObject {
     @Published var todos: [Todo] = []
     
     @Published var detailsShowing: Bool = false
-    @Published var detailsTitle: String = ""
-    @Published var detailsDueDate: Date = Date()
+    
+    // current todo attribute
     @Published var thingId: String = ""
+    @Published var title: String = ""
+    @Published var subtitle: String = ""
+    @Published var category: String = ""
+    @Published var priority: Int = 8
+    @Published var duration: Bool = false
+    @Published var order: Int = 0
+    @Published var monthDuration: Int = 0
+    @Published var dayDuration: Int = 0
+    @Published var hourDuration: Int = 0
+    @Published var minuteDuration: Int = 0
+    @Published var startDate: Date = Date()
+    @Published var dueDate: Date = Date()
+    @Published var checked: Bool = false
+    @Published var i: Int = 0
+    @Published var isRepeat: Bool = false
+    @Published var alarm: Date = Date()
     
     func dbSort() {
         self.todos.sort(by:{ $0.dueDate.timeIntervalSince1970 < $1.dueDate.timeIntervalSince1970})
@@ -35,3 +51,5 @@ class todoMain: ObservableObject {
         }
     }
 }
+
+

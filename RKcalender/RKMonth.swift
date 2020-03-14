@@ -71,7 +71,7 @@ struct RKMonth: View {
                 } else {
                     self.rkManager.selectedDate = date
                 }
-                self.isPresented = false
+//                self.isPresented = false
             case 1:
                 self.rkManager.startDate = date
                 self.rkManager.endDate = nil
@@ -114,6 +114,7 @@ struct RKMonth: View {
     
     func getMonthHeader() -> String {
         let headerDateFormatter = DateFormatter()
+        headerDateFormatter.locale = Locale(identifier: "zh_CN")
         headerDateFormatter.calendar = rkManager.calendar
         headerDateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "yyyy LLLL", options: 0, locale: rkManager.calendar.locale)
         

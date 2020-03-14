@@ -23,15 +23,16 @@ struct TodoView: View {
                 editingMode = false
                 editingTodo = Todo()
                 detailsShouldUpdateTitle = true
-                self.main.detailsTitle = ""
-                self.main.detailsDueDate = Date()
+                self.main.title = ""
+                self.main.subtitle = ""
+                self.main.dueDate = Date()
                 self.main.detailsShowing = true
             }) {
                 todoAdd()
             }.offset(x: UIScreen.main.bounds.width/2 - 60, y: UIScreen.main.bounds.height/2 - 80)
             .blur(radius: main.detailsShowing ? 10 : 0)
                 .animation(.spring())
-            TodoDetailsView(main: main)
+            TodoEditView(main: main)
                 .offset(x: 0, y: main.detailsShowing ? 0 : UIScreen.main.bounds.height)
                 .animation(.spring())
         }

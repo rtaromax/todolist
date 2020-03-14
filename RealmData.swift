@@ -13,11 +13,12 @@ import Realm
 
 class Thing: Object, Identifiable {
     @objc dynamic var thingId: String = ""
+    @objc dynamic var online: Bool = false
     @objc dynamic var title: String = ""
     @objc dynamic var subtitle: String = ""
     @objc dynamic var category: String = "other"
     @objc dynamic var priority: Int = 8
-    @objc dynamic var immediate: Bool = true
+    @objc dynamic var duration: Bool = false
     @objc dynamic var startDate: Date = Date()
     @objc dynamic var dueDate: Date = Date()
     @objc dynamic var totalTodos: Int = 0
@@ -34,8 +35,8 @@ class Todo: Object, Identifiable {
     @objc dynamic var subtitle: String = ""
     @objc dynamic var category: String = ""
     @objc dynamic var priority: Int = 8
-    @objc dynamic var immediate: Bool = true
-    @objc dynamic var order: Int = 0
+    @objc dynamic var duration: Bool = false
+    @objc dynamic var order: Int = 1
     @objc dynamic var monthDuration: Int = 0
     @objc dynamic var dayDuration: Int = 0
     @objc dynamic var hourDuration: Int = 0

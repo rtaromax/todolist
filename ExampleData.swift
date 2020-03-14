@@ -8,7 +8,7 @@
 
 import Foundation
 
-var exampleThings: [Thing] = [createSystemThingImmediate(thingId: "sys000", title: "欢迎来到锦囊", subtitle: "生活处处要锦囊", priority: 9)]
+var exampleThings: [Thing] = [createSystemThingImmediate(thingId: "sys000", title: "欢迎来到锦囊", subtitle: "生活处处要锦囊", priority: 9, totalTodos: 2)]
 
 var exampleTodos: [Todo] = [
     createSystemTodoImmediate(thingId: "sys000", title: "第一次见面", subtitle: "你好啊！", priority: 9, order: 0),
@@ -28,13 +28,13 @@ func createSystemTodoImmediate(thingId: String, title:String, subtitle:String, p
     
     todo.todoId = UUID().uuidString
     todo.category = "system"
-    todo.immediate = true
+    todo.duration = false
     
     return todo
 }
 
 
-func createSystemThingImmediate(thingId: String, title:String, subtitle:String, priority:Int) -> Thing {
+func createSystemThingImmediate(thingId: String, title:String, subtitle:String, priority:Int, totalTodos:Int) -> Thing {
     
     let thing = Thing()
     thing.thingId = thingId
@@ -44,7 +44,9 @@ func createSystemThingImmediate(thingId: String, title:String, subtitle:String, 
     thing.priority = priority
     
     thing.category = "system"
-    thing.immediate = true
+    thing.duration = false
+    
+    thing.totalTodos = totalTodos
     
     return thing
 }
