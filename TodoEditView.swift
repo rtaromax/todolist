@@ -88,7 +88,7 @@ struct TodoEditView: View {
                                 }
                             }
                             
-                            let todoList = Array(db.objects(Todo.self))
+                            let todoList = Array(db.objects(Todo.self).filter("thingId == %@", self.self.main.thingId))
                             self.main.todos = todoList
                             self.main.dbSort()
                             
@@ -136,7 +136,7 @@ struct TodoEditView: View {
                             .font(.footnote)
                         Spacer()
                     }
-                    MultilineTextField(self.main.subtitle, text: $editingSubtitle, onCommit: {}, limitedCharacter: 100)
+                    MultilineTextField(self.main.subtitle, text: self.$main.subtitle, onCommit: {}, limitedCharacter: 100)
                         .overlay(RoundedRectangle(cornerRadius: 4).stroke(Color.black))
                 }
                 .padding(8)
@@ -286,11 +286,6 @@ struct DurationView: View {
     
     var rkManager = RKManager(calendar: Calendar.current, minimumDate: Date(), maximumDate: Date().addingTimeInterval(60*60*24*365), mode: 0)
     
-//    @Binding var month: Int = 0
-//    @Binding var day: Int = 0
-//    @Binding var hour: Int = 0
-//    @Binding var minute: Int = 0
-    
     var months = [Int](0..<12)
     var days = [Int](0..<31)
     var hours = [Int](0..<24)
@@ -359,7 +354,11 @@ struct DurationView: View {
                                 }
                             }
                         }
+                        .onDisappear{
+                            self.main.dueDate = dateModification(date: self.main.startDate, month: self.main.monthDuration, day: self.main.dayDuration, hour: self.main.hourDuration, minute: self.main.minuteDuration, mode: "add")
+                        }
                     }
+                    
                 }
                 
                 
@@ -369,6 +368,7 @@ struct DurationView: View {
                     Text(formatDate(date: self.main.startDate))
                         .onTapGesture {
                             self.showDatePicker.toggle()
+//                        }.popover(isPresented: self.$showDatePicker){
                         }.sheet(isPresented: self.$showDatePicker){
                             ZStack{
                                 VStack{
@@ -377,10 +377,16 @@ struct DurationView: View {
                                         .onTapGesture {
                                             self.showDatePicker.toggle()
                                             self.main.startDate = self.rkManager.selectedDate ??  self.main.startDate
+                                            self.main.dueDate = dateModification(date: self.main.startDate, month: self.main.monthDuration, day: self.main.dayDuration, hour: self.main.hourDuration, minute: self.main.minuteDuration, mode: "add")
                                     }
+                                    RKViewController(isPresented: self.$showDatePicker, rkManager: self.rkManager)
                                 }
-                                RKViewController(isPresented: self.$showDatePicker, rkManager: self.rkManager)
+                            .padding(16)
                             }
+                            .frame(height: 500)
+                        }
+                        .onDisappear{
+                            
                         }
                 }
                 
@@ -398,10 +404,14 @@ struct DurationView: View {
                                         .onTapGesture {
                                             self.showDatePicker.toggle()
                                             self.main.dueDate = self.rkManager.selectedDate ?? self.main.dueDate
+                                            self.main.startDate = dateModification(date: self.main.dueDate, month: self.main.monthDuration, day: self.main.dayDuration, hour: self.main.hourDuration, minute: self.main.minuteDuration, mode: "minus")
                                     }
                                 }
                                 RKViewController(isPresented: self.$showDatePicker, rkManager: self.rkManager)
                             }
+                        }
+                        .onDisappear{
+                            
                         }
                 }
             }

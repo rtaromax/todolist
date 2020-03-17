@@ -14,8 +14,7 @@ class thingMain: ObservableObject {
     @Published var thingTitle: String = ""
     
     @Published var detailsShowing: Bool = false
-    @Published var detailsDueDate: Date = Date()
     
-    var thing: Thing = Thing()
+    @Published var thing: Thing = Thing()
     
 }

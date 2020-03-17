@@ -17,6 +17,7 @@ struct RKViewController: View {
     var body: some View {
         Group {
             RKWeekdayHeader(rkManager: self.rkManager)
+                .padding(.horizontal, 8)
             Divider()
             List {
                 ForEach(0..<numberOfMonths()) { index in

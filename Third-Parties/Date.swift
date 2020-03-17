@@ -56,3 +56,25 @@ func date2Word (date: Date) -> String {
     }
     return advanced_str
 }
+
+func dateModification (date: Date, month: Int, day: Int, hour: Int, minute: Int, mode: String) -> Date {
+    var dateComponent = DateComponents()
+    
+    if mode == "add" {
+        dateComponent.month = month
+        dateComponent.day = day
+        dateComponent.hour = hour
+        dateComponent.minute = minute
+    }
+    
+    if mode == "minus" {
+        dateComponent.month = -month
+        dateComponent.day = -day
+        dateComponent.hour = -hour
+        dateComponent.minute = -minute
+    }
+    
+    let modifiedDate = Calendar.current.date(byAdding: dateComponent, to: date) ?? date
+
+    return modifiedDate
+}

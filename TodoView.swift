@@ -11,18 +11,18 @@ import SwiftUI
 struct TodoView: View {
     
     @ObservedObject var main: todoMain
-    
-    let thing: Thing
+    @ObservedObject var wanshi: thingMain
     
     var body: some View {
         ZStack{
-            TodoListView(main: main, thing: thing)
+            TodoListView(main: main, wanshi: wanshi)
                 .blur(radius: main.detailsShowing ? 10 : 0)
                 .animation(.spring())
             Button(action: {
                 editingMode = false
                 editingTodo = Todo()
                 detailsShouldUpdateTitle = true
+                self.main.thingId = self.wanshi.thing.thingId
                 self.main.title = ""
                 self.main.subtitle = ""
                 self.main.dueDate = Date()
@@ -62,6 +62,6 @@ struct todoAdd: View {
 
 struct TodoView_Previews: PreviewProvider {
     static var previews: some View {
-        TodoView(main: todoMain(), thing: Thing())
+        TodoView(main: todoMain(), wanshi: thingMain())
     }
 }

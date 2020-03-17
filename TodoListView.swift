@@ -12,7 +12,7 @@ import SwiftUI
 struct TodoListView: View {
     
     @ObservedObject var main: todoMain
-    let thing: Thing
+    @ObservedObject var wanshi: thingMain
     
     var body: some View {
         NavigationView {
@@ -47,26 +47,28 @@ struct TodoListView: View {
                     Spacer().frame(height: 150)
                 }
                 .edgesIgnoringSafeArea(.bottom)
-                .navigationBarTitle(Text(self.thing.title).foregroundColor(Color("theme")))
+                .navigationBarTitle(Text(self.main.title)
+                .foregroundColor(Color("theme")))
             }
         }
-            .onAppear {
-                
-                // read database & filter query
-//                let db = realStorage().setRealm(databaseName: dbName)
-                let todoList = Array(db.objects(Todo.self).filter("thingId = %@", self.thing.thingId))
-                
-                // load todos and sort
-                self.main.todos = todoList
-                self.main.dbSort()
-                
-            }
+        .onAppear {
+            
+            // read database & filter query
+            let todoList = Array(db.objects(Todo.self).filter("thingId = %@", self.wanshi.thing.thingId))
+            
+            // load todos and sort
+            self.main.todos = todoList
+//                self.main.dbSort()
+            print("\(self.main.todos)")
+            print("\(self.main.title)")
+            
         }
     }
+}
 
 
 struct TodoListView_Previews: PreviewProvider {
     static var previews: some View {
-        TodoListView(main: todoMain(), thing: Thing())
+        TodoListView(main: todoMain(), wanshi: thingMain())
     }
 }

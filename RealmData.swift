@@ -12,7 +12,7 @@ import Realm
 
 
 class Thing: Object, Identifiable {
-    @objc dynamic var thingId: String = ""
+    @objc dynamic var thingId: String = UUID().uuidString
     @objc dynamic var online: Bool = false
     @objc dynamic var title: String = ""
     @objc dynamic var subtitle: String = ""

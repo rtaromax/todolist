@@ -9,8 +9,9 @@
 import SwiftUI
 
 struct ThingListView: View {
-    
-    @State var things : [Thing]
+    @ObservedObject var main: todoMain
+    @ObservedObject var wanshi: thingMain
+    @State var things: [Thing]
     
     var body: some View {
         NavigationView {
@@ -19,7 +20,7 @@ struct ThingListView: View {
                         VStack {
                             HStack {
                                 Spacer().frame(width:20)
-                                ThingItemView(main: todoMain(), thing: thing)
+                                ThingItemView(main: self.main, wanshi: self.wanshi, thing: thing)
                                     .cornerRadius(10)
                                     .clipped()
                                     .shadow(color: Color("todoItemShadow"), radius: 5)
@@ -35,7 +36,6 @@ struct ThingListView: View {
             .navigationBarTitle(Text("Plan").foregroundColor(Color("theme")))
         }
         .onAppear{
-//           let db = realStorage().setRealm(databaseName: dbName)
             self.things = Array(db.objects(Thing.self))
         }
     }
@@ -43,7 +43,7 @@ struct ThingListView: View {
 
 struct ThingItemView_Previews: PreviewProvider {
     static var previews: some View {
-        ThingListView(things: [Thing()])
+        ThingListView(main: todoMain(), wanshi: thingMain(), things: [Thing()])
     }
 }
 
