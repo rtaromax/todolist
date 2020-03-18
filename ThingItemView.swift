@@ -21,7 +21,7 @@ struct ThingItemView: View {
             Button(action: {
                 self.showingDetail.toggle()
                 self.main.thingId = self.thing.thingId
-                self.main.title = self.thing.title
+//                self.main.title = self.thing.title
                 self.wanshi.thing = self.thing
                 print("\(self.main.title)")
             }) {

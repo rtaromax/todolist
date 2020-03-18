@@ -65,9 +65,6 @@ struct TodoEditView: View {
                         Button(action: {
                             UIApplication.shared.windows[0].endEditing(true)
                             
-                            // update date
-                            self.main.subtitle = self.editingSubtitle
-                            
                             if editingMode {
                                 let editingItem = db.objects(Todo.self).filter("todoId == %@", self.main.todos[editingIndex].todoId).first ?? Todo()
                                 try! db.write {

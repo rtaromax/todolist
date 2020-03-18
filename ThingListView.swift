@@ -16,7 +16,7 @@ struct ThingListView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                ForEach(things) { thing in
+                ForEach(wanshi.things) { thing in
                         VStack {
                             HStack {
                                 Spacer().frame(width:20)
@@ -36,7 +36,7 @@ struct ThingListView: View {
             .navigationBarTitle(Text("Plan").foregroundColor(Color("theme")))
         }
         .onAppear{
-            self.things = Array(db.objects(Thing.self))
+            self.wanshi.things = Array(db.objects(Thing.self))
         }
     }
 }

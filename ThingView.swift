@@ -9,16 +9,15 @@
 import SwiftUI
 
 struct ThingView: View {
-    
+    @ObservedObject var main: todoMain
     @ObservedObject var wanshi: thingMain
     
     var body: some View {
         ZStack{
-            ThingListView(main: todoMain(), wanshi: thingMain(), things: [Thing()])
+            ThingListView(main: main, wanshi: wanshi, things: [Thing()])
                 .blur(radius: wanshi.detailsShowing ? 10 : 0)
                 .animation(.spring())
             Button(action: {
-                detailsShouldUpdateTitle = true
                 self.wanshi.detailsShowing = true
                 self.wanshi.thing = Thing()
             }) {
@@ -26,7 +25,7 @@ struct ThingView: View {
             }.offset(x: UIScreen.main.bounds.width/2 - 60, y: UIScreen.main.bounds.height/2 - 80)
             .blur(radius: wanshi.detailsShowing ? 10 : 0)
                 .animation(.spring())
-            ThingEditView(wanshi: thingMain())
+            ThingEditView(wanshi: wanshi)
                 .offset(x: 0, y: wanshi.detailsShowing ? 0 : UIScreen.main.bounds.height)
                 .animation(.spring())
         }
@@ -54,6 +53,6 @@ struct thingAdd: View {
 
 struct ThingView_Previews: PreviewProvider {
     static var previews: some View {
-        ThingView(wanshi: thingMain())
+        ThingView(main: todoMain(), wanshi: thingMain())
     }
 }
