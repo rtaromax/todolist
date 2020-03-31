@@ -11,10 +11,11 @@ import Foundation
 class thingMain: ObservableObject {
     
     @Published var thingId: String = ""
-    @Published var thingTitle: String = ""
+    @Published var title: String = ""
     
     @Published var detailsShowing: Bool = false
     
     @Published var thing: Thing = Thing()
+    @Published var things: [Thing] = []
     
 }

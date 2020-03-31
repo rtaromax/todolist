@@ -48,10 +48,7 @@ struct ThingEditView: View {
             .padding(8)
             
             Button(action: {
-                self.wanshi.detailsShowing = false
-                
                 let newThing = Thing()
-                
 //                newThing.thingId = self.wanshi.thingId
                 newThing.title = self.title
                 newThing.subtitle = self.subtitle
@@ -59,6 +56,9 @@ struct ThingEditView: View {
                 try! db.write{
                     db.add(newThing)
                 }
+                self.wanshi.things = Array(db.objects(Thing.self))
+                print(self.wanshi.things)
+                self.wanshi.detailsShowing.toggle()
             }) {
                 HStack{
                     Spacer()
@@ -66,6 +66,23 @@ struct ThingEditView: View {
                     VStack {
                         Spacer()
                         Text("完成")
+                        Spacer()
+                    }
+                    Spacer()
+                        .frame(width: 14)
+                }
+            }
+            
+            Button(action: {
+                            
+                self.wanshi.detailsShowing.toggle()
+            }) {
+                HStack{
+                    Spacer()
+                        .frame(width: 12)
+                    VStack {
+                        Spacer()
+                        Text("取消")
                         Spacer()
                     }
                     Spacer()

@@ -47,7 +47,7 @@ struct TodoListView: View {
                     Spacer().frame(height: 150)
                 }
                 .edgesIgnoringSafeArea(.bottom)
-                .navigationBarTitle(Text(self.main.title)
+                .navigationBarTitle(Text(self.wanshi.thing.title)
                 .foregroundColor(Color("theme")))
             }
         }
@@ -59,8 +59,6 @@ struct TodoListView: View {
             // load todos and sort
             self.main.todos = todoList
 //                self.main.dbSort()
-            print("\(self.main.todos)")
-            print("\(self.main.title)")
             
         }
     }

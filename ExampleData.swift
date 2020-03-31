@@ -11,12 +11,12 @@ import Foundation
 var exampleThings: [Thing] = [createSystemThingImmediate(thingId: "sys000", title: "欢迎来到锦囊", subtitle: "生活处处要锦囊", priority: 9, totalTodos: 2)]
 
 var exampleTodos: [Todo] = [
-    createSystemTodoImmediate(thingId: "sys000", title: "第一次见面", subtitle: "你好啊！", priority: 9, order: 0),
-    createSystemTodoImmediate(thingId: "sys000", title: "有一些你需要知道的东西", subtitle: "请跟我来", priority: 9, order: 1),
+    createSystemTodoImmediate(thingId: "sys000", title: "第一次见面", subtitle: "你好啊！", priority: 9, order: 0, i: 0),
+    createSystemTodoImmediate(thingId: "sys000", title: "有一些你需要知道的东西", subtitle: "请跟我来", priority: 9, order: 1, i: 1),
 ]
 
 
-func createSystemTodoImmediate(thingId: String, title:String, subtitle:String, priority:Int, order:Int) -> Todo {
+func createSystemTodoImmediate(thingId: String, title:String, subtitle:String, priority:Int, order:Int, i:Int) -> Todo {
     
     let todo = Todo()
     todo.thingId = thingId
@@ -25,6 +25,7 @@ func createSystemTodoImmediate(thingId: String, title:String, subtitle:String, p
     todo.subtitle = subtitle
     todo.priority = priority
     todo.order = order
+    todo.i = i
     
     todo.todoId = UUID().uuidString
     todo.category = "system"
