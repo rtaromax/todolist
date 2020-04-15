@@ -48,7 +48,18 @@ struct TodoListView: View {
                 }
                 .edgesIgnoringSafeArea(.bottom)
                 .navigationBarTitle(Text(self.wanshi.thing.title)
-                .foregroundColor(Color("theme")))
+                    .foregroundColor(Color("theme")))
+                .navigationBarItems(trailing:
+                    Button(action: {
+                        self.wanshi.title = self.wanshi.thing.title
+                        self.wanshi.detailsShowing.toggle()
+                    }) {
+                        Image(systemName: "clock")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                    }
+                )
+                
             }
         }
         .onAppear {

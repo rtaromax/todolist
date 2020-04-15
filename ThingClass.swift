@@ -12,6 +12,7 @@ class thingMain: ObservableObject {
     
     @Published var thingId: String = ""
     @Published var title: String = ""
+    @Published var subtitle: String = ""
     
     @Published var detailsShowing: Bool = false
     
