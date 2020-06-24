@@ -15,7 +15,7 @@ class Thing: Object, Identifiable {
     @objc dynamic var thingId: String = UUID().uuidString
     @objc dynamic var online: Bool = false
     @objc dynamic var title: String = ""
-    @objc dynamic var subtitle: String = ""
+    @objc dynamic var subtitle: String = ""
     @objc dynamic var category: String = "other"
     @objc dynamic var priority: Int = 8
     @objc dynamic var duration: Bool = false
